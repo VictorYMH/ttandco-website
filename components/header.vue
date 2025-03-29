@@ -5,9 +5,14 @@
         </div>
         <nav class="nav">
             <ul>
-                <li @click="navigateTo('/products')">Products</li>
-                <li @click="navigateTo('/about')">About Us</li>
-                <li @click="navigateTo('/brand')">Brand</li>
+                <li @click="navigateTo('/')">首页</li>
+                <li @click="navigateTo('/aboutus')">关于我们</li>
+                <li @click="navigateTo('/categories')">产品类别</li>
+                <li @click="navigateTo('/only-one-series')">“ONLY-ONE Series”</li>
+                <li @click="navigateTo('/sn-lookup')">防伪查询</li>
+                <li @click="navigateTo('/store')">店铺信息</li>
+                <!-- <li @click="navigateTo('/sn-lookup')">mini program</li>
+                <li @click="navigateTo('/store')">店铺信息</li> -->
             </ul>
         </nav>
     </header>
@@ -27,29 +32,41 @@ export default {
 <style scoped>
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 1rem;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+
+.logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .logo img {
-    height: 40px;
     cursor: pointer;
 }
 
 .nav ul {
     display: flex;
     list-style: none;
-    margin: 0;
+    margin: 1rem 0 0;
     padding: 0;
 }
 
 .nav li {
-    margin-left: 2rem;
     cursor: pointer;
     font-weight: bold;
+    position: relative; /* Ensure proper positioning for pseudo-elements */
+    border-right: 2px solid #3b3b3b; /* Add the vertical line */
+    padding: 0 2rem; /* Add spacing between text and the line */
+}
+
+.nav li:last-child {
+    border-right: none; /* Remove the line from the last item */
 }
 
 @media (max-width: 768px) {

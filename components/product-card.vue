@@ -18,6 +18,7 @@ export default {
             required: true
         }
     },
+    mixins: [priceMixin],
     methods: {
         formatCurrency(value) {
             return `$${parseFloat(value).toFixed(2)}`;

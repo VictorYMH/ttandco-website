@@ -51,10 +51,9 @@ export default {
     min-width: 100%;
     height: 100%;
     position: relative;
-    box-shadow: inset 0px 10px 20px rgba(0, 0, 0, 0.5); /* Add shadow at the top */
 }
 
-/* .carousel-item::before {
+.carousel-item::before {
     content: '';
     position: absolute;
     top: 0;
@@ -64,7 +63,7 @@ export default {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
     pointer-events: none;
     z-index: 1;
-} */
+}
 
 .carousel-button {
     position: absolute;

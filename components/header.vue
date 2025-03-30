@@ -6,7 +6,7 @@
         <nav class="nav">
             <ul>
                 <li @click="navigateTo('/')">首页</li>
-                <li @click="navigateTo('/aboutus')">关于我们</li>
+                <li @click="navigateTo('/about-us')">关于我们</li>
                 <li @click="navigateTo('/categories')">产品类别</li>
                 <li @click="navigateTo('/only-one-series')">“ONLY-ONE Series”</li>
                 <li @click="navigateTo('/sn-lookup')">防伪查询</li>

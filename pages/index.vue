@@ -1,15 +1,24 @@
 <template>
   <div class="homepage">
-    <Carousel :items="carouselItems">
-    <template #default="{ item }">
-        <img :src="item.image" :alt="item.alt" class="carousel-image" />
-      </template>
-    </Carousel>
+    <div class="carousel-container">
+      <Carousel :items="carouselItems">
+        <template #default="{ item }">
+          <img :src="item.image" :alt="item.alt" class="carousel-image" />
+        </template>
+      </Carousel>
+    </div>
+   
+    <div class="product-category-container">
+      <div class="nav-column">
+        <LeftNav :title="'TT&CO.产品分类'" :categories="categories" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Carousel from "~/components/carousel.vue";
+import LeftNav from "~/components/left-nav.vue";
 
 export default {
   name: "homepage",
@@ -25,6 +34,7 @@ export default {
         { image: "/hero04.jpg", alt: "hero image 4" },
         { image: "/hero05.jpg", alt: "hero image 5" },
       ],
+      categories: ["Category 1", "Category 2", "Category 3", "Category 4"],
     };
   },
 };
@@ -33,5 +43,9 @@ export default {
 <style>
 .carousel-image {
   width: 100%;
+}
+.product-category-container {
+  display: flex;
+  justify-content: center;
 }
 </style>

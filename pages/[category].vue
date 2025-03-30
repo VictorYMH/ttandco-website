@@ -18,7 +18,7 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { useAsyncData } from '#app'
-import ProductCard from '~/components/product_card.vue'
+import ProductCard from '~/components/product-card.vue'
 
 const route = useRoute()
 const categoryUrl = route.params.category

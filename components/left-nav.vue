@@ -3,28 +3,59 @@
     <div class="top-fixed-container">
       <div class="logo-container">
         <img src="@/public/logo.png" alt="Logo" class="logo" />
-     </div>
-     <div class="recommend-category">
-      <a href="/categories" class="recommend-category-link">新品推荐</a>
-     </div>
+      </div>
+      <div class="recommend-category">
+        <a href="/categories" class="recommend-category-link">新品推荐</a>
+      </div>
       <div class="search-container">
-        <input type="text" placeholder="Search..." class="search-input" />
+        <input
+          type="text"
+          placeholder="Search..."
+          class="search-input"
+          v-model="searchQuery"
+        />
         <div class="search-button-container">
-          <button class="search-button" aria-label="Search">
-            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" style="background-color: black;">
-              <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none" />
-              <line x1="14" y1="14" x2="20" y2="20" stroke="white" stroke-width="2" />
-            </svg>
-          </button>
+          <input
+            class="search-button"
+            type="submit"
+            aria-label="Search"
+            @click="handleSearch"
+          />
+          <svg
+            class="search-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            style="background-color: black;"
+            @click="handleSearch"
+          >
+            <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none" />
+            <line x1="14" y1="14" x2="20" y2="20" stroke="white" stroke-width="2" />
+          </svg>
         </div>
       </div>
     </div>
+    <div class="divider"></div>
     <div class="nav-header">
-      <h2>{{ title }}</h2>
+      {{ title }}
     </div>
     <ul class="nav-list">
       <li v-for="(category, index) in categories" :key="index" class="nav-item">
         {{ category }}
+      </li>
+    </ul>
+    
+    <div class="divider"></div>
+    <div class="nav-header">
+      官方媒体
+    </div>
+    <ul class="media-list">
+      <li v-for="(media, index) in medias" :key="index" class="media-item">
+        <div class="media-item-container">
+          <img :src="media.icon" alt="Media Icon" class="media-icon" />
+          <a :href="media.url" target="_blank" class="media-link">{{ media.name }}</a>
+        </div>
       </li>
     </ul>
   </div>
@@ -43,6 +74,41 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      searchQuery: "",
+      medias: [ 
+        {
+          name: "微信小程序",
+          url: "https://twitter.com/yourprofile",
+          icon: "favicon.ico",
+        },
+        {
+          name: "淘宝店铺",
+          url: "https://instagram.com/yourprofile",
+          icon: "favicon.ico",
+
+        },
+        {
+          name: "视频号",
+          url: "https://facebook.com/yourprofile",
+          icon: "favicon.ico",
+
+        },
+        {
+          name: "小红书",
+          url: "https://youtube.com/yourprofile",
+          icon: "favicon.ico",
+        }
+      ]
+    };
+  },
+  methods: {
+    handleSearch() {
+      console.log("Search triggered with query:", this.searchQuery);
+      // Add your search logic here
+    },
+  },
 };
 </script>
 
@@ -53,11 +119,12 @@ export default {
   width: fit-content;
 }
 
-.top-fixed-container .logo-container .logo{
+.top-fixed-container .logo-container .logo {
   max-width: 14rem;
 }
+
 .recommend-category {
-  padding: .8rem 1rem;
+  padding: 0.8rem 1rem;
   display: flex;
   justify-content: center;
 }
@@ -66,7 +133,7 @@ export default {
   background: black;
   color: white;
   padding: 0.4rem 1.8rem;
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: bold;
   border-radius: 0.4rem;
 }
@@ -76,34 +143,72 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin: 0 0 1.6rem;
 }
+
 .search-button {
-  cursor: pointer;
+  display: none; /* Hide the native input */
+}
+
+.search-button-container {
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: transparent;
+}
+
+.search-icon {
+  cursor: pointer; /* Make the SVG clickable */
+  height: 2.2rem;
+  width: 2.2rem;
 }
 
 .search-input {
-    line-height: 1.8rem;
+  line-height: 1.8rem;
 }
 
+.divider {
+  height: 2px;
+  background: black;
+  margin: 0.2rem 0;
+}
 
+.nav-header {
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 0;
+  line-height: 2.2rem;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  font-weight: 600;
+}
 
-.nav-header {}
-
-.nav-header h2 {}
-
-.nav-list {
+.nav-list,
+.media-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  list-style: none;
+  padding: 1rem 0 1rem 1rem;
+  margin: 0;
 }
 
-.nav-item {
+.nav-item,
+.media-item {
   cursor: pointer;
+  color: grey;
+  padding: 0.3rem 0;
 }
 
-.nav-item:hover {}
+.media-item-container {
+  display: flex;
+  align-items: center;
+}
+
+.media-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0.4rem;
+  border: 3px solid #c3c3c3;
+  margin: 0 1rem 0 0;
+}
+
 </style>

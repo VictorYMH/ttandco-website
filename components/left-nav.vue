@@ -36,17 +36,42 @@
         </div>
       </div>
     </div>
+
     <div class="divider"></div>
+
     <div class="nav-header">
       {{ title }}
     </div>
     <ul class="nav-list">
-      <li v-for="(category, index) in categories" :key="index" class="nav-item">
-        {{ category }}
+      <li
+        v-for="(category, index) in categories"
+        :key="index"
+        class="nav-item"
+      >
+        <div
+          @click="toggleCollapse(index)"
+          class="nav-item-header"
+          :class="{ expanded: !category.collapsed }"
+        >
+          {{ category.name }}
+          <span class="collapse-icon">
+            {{ category.collapsed ? '+' : '-' }}
+          </span>
+        </div>
+        <ul v-if="!category.collapsed" class="sub-list">
+          <li
+            v-for="(subItem, subIndex) in category.subItems"
+            :key="subIndex"
+            class="sub-item"
+          >
+           - {{ subItem }}
+          </li>
+        </ul>
       </li>
     </ul>
     
     <div class="divider"></div>
+
     <div class="nav-header">
       官方媒体
     </div>
@@ -107,6 +132,9 @@ export default {
     handleSearch() {
       console.log("Search triggered with query:", this.searchQuery);
       // Add your search logic here
+    },
+    toggleCollapse(index) {
+      this.categories[index].collapsed = !this.categories[index].collapsed;
     },
   },
 };
@@ -184,18 +212,49 @@ export default {
 .nav-list,
 .media-list {
   list-style: none;
-  padding: 0;
   margin: 0;
-  list-style: none;
-  padding: 1rem 0 1rem 1rem;
-  margin: 0;
+  padding: 1rem 0 1rem;
 }
 
 .nav-item,
 .media-item {
   cursor: pointer;
   color: grey;
-  padding: 0.3rem 0;
+}
+
+.media-item {
+  padding: .3rem 1rem;
+}
+
+.nav-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: .3rem 1rem;
+
+}
+
+.nav-item-header.expanded {
+  background-color: black;
+  color: white;
+}
+
+.collapse-icon {
+  font-weight: bold;
+}
+
+.nav-item .sub-list {
+  list-style: none;
+  padding: 0.4rem 1rem;
+  background-color: #dedede;
+  border-bottom: 1px solid black;
+}
+
+.sub-item {
+  color: #393939;
+  padding: 0.2rem 0;
 }
 
 .media-item-container {

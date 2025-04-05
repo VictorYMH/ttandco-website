@@ -24,6 +24,7 @@ export default {
   name: "homepage",
   components: {
     Carousel,
+    LeftNav,
   },
   data() {
     return {
@@ -34,7 +35,10 @@ export default {
         { image: "/hero04.jpg", alt: "hero image 4" },
         { image: "/hero05.jpg", alt: "hero image 5" },
       ],
-      categories: ["Category 1", "Category 2", "Category 3", "Category 4"],
+      categories: [
+        { name: "Category 1", collapsed: true, subItems: ["Sub-item 1", "Sub-item 2"] },
+        { name: "Category 2", collapsed: true, subItems: ["Sub-item A", "Sub-item B"] },
+      ]
     };
   },
 };

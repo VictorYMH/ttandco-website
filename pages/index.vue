@@ -1,29 +1,41 @@
 <template>
   <div class="homepage">
     <div class="carousel-container">
-      <Carousel :items="carouselItems">
+      <NativeCarousel :items="carouselItems" :topShadow="true" :visibleItems="1">
         <template #default="{ item }">
           <img :src="item.image" :alt="item.alt" class="carousel-image" />
         </template>
-      </Carousel>
+      </NativeCarousel>
     </div>
    
     <div class="product-category-container">
       <div class="nav-column">
         <LeftNav :title="'TT&CO.产品分类'" :categories="categories" />
       </div>
+      <div class="products-column">
+        <div class="new-arrivals-carousel">
+          <NativeCarousel :items="newArrivals" :visibleItems="3">
+            <template #default="{ item }">
+              <img :src="item.image" :alt="item.alt" class="new-arrivals-product" />
+            </template>
+          </NativeCarousel>
+        </div>
+      </div>
     </div>
+
+    
+    
   </div>
 </template>
 
 <script>
-import Carousel from "~/components/carousel.vue";
+import NativeCarousel from "~/components/carousel.vue";
 import LeftNav from "~/components/left-nav.vue";
 
 export default {
   name: "homepage",
   components: {
-    Carousel,
+    NativeCarousel,
     LeftNav,
   },
   data() {
@@ -38,8 +50,35 @@ export default {
       categories: [
         { name: "Category 1", collapsed: true, subItems: ["Sub-item 1", "Sub-item 2"] },
         { name: "Category 2", collapsed: true, subItems: ["Sub-item A", "Sub-item B"] },
-      ]
+      ],
+      carouselConfig: {
+        itemsToShow: 2.5,
+        wrapAround: true,
+        items: [],
+      },
+      items: ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'],
+      newArrivals: [
+        {
+          image: "/product1.jpg",
+          alt: "New Arrival 1",
+        },
+        {
+          image: "/product2.jpg",
+          alt: "New Arrival 2",
+        },
+        {
+          image: "/product3.jpg",
+          alt: "New Arrival 3",
+        },
+        {
+          image: "/product4.jpg",
+          alt: "New Arrival 4",
+        },
+      ],
+      
     };
+  },
+  mounted() {
   },
 };
 </script>
@@ -51,5 +90,19 @@ export default {
 .product-category-container {
   display: flex;
   justify-content: center;
+}
+.products-column {
+  max-width: 40rem;
+}
+
+.new-arrivals-product {
+  padding: 0.1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.new-arrivals-product:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  transform: scale(1.05);
 }
 </style>

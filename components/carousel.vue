@@ -1,7 +1,15 @@
 <template>
     <div class="carousel">
-        <div class="carousel-container" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-            <div class="carousel-item" v-for="(item, index) in items" :key="index">
+        <div
+            class="carousel-container"
+            :style="{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }"
+        >
+            <div
+                :class="['carousel-item', { 'top-shadow': topShadow }]"
+                v-for="(item, index) in itemsWithClones"
+                :key="index"
+                :style="{ flex: `0 0 ${100 / visibleItems}%` }"
+            >
                 <slot :item="item"></slot>
             </div>
         </div>
@@ -18,19 +26,53 @@ export default {
             type: Array,
             required: true,
         },
+        topShadow: {
+            type: Boolean,
+            default: false,
+        },
+        visibleItems: {
+            type: Number,
+            default: 1, // Show 1 item by default
+        },
     },
     data() {
         return {
             currentIndex: 0,
         };
     },
+    computed: {
+        itemsWithClones() {
+            // Add clones of the first and last items for infinite looping
+            return [
+                ...this.items.slice(-this.visibleItems),
+                ...this.items,
+                ...this.items.slice(0, this.visibleItems),
+            ];
+        },
+    },
     methods: {
         nextSlide() {
-            this.currentIndex = (this.currentIndex + 1) % this.items.length;
+            this.currentIndex++;
+            if (this.currentIndex > this.items.length) {
+                // Reset to the first item (after clones)
+                setTimeout(() => {
+                    this.currentIndex = this.visibleItems;
+                }, 500); // Match the transition duration
+            }
         },
         prevSlide() {
-            this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+            this.currentIndex--;
+            if (this.currentIndex < 0) {
+                // Reset to the last item (before clones)
+                setTimeout(() => {
+                    this.currentIndex = this.items.length - 1;
+                }, 500); // Match the transition duration
+            }
         },
+    },
+    mounted() {
+        // Start at the first real item (after clones)
+        this.currentIndex = this.visibleItems;
     },
 };
 </script>
@@ -45,15 +87,15 @@ export default {
 .carousel-container {
     display: flex;
     transition: transform 0.5s ease-in-out;
+    will-change: transform;
 }
 
 .carousel-item {
-    min-width: 100%;
     height: 100%;
     position: relative;
 }
 
-.carousel-item::before {
+.top-shadow::before {
     content: '';
     position: absolute;
     top: 0;

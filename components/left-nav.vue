@@ -140,7 +140,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .left-nav {
   background-color: #fff;
   padding: 1.6rem;

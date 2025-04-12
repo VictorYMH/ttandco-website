@@ -105,25 +105,25 @@ export default {
       medias: [ 
         {
           name: "微信小程序",
-          url: "https://twitter.com/yourprofile",
-          icon: "favicon.ico",
+          url: "/",
+          icon: "/icons/mini_program.png",
         },
         {
           name: "淘宝店铺",
-          url: "https://instagram.com/yourprofile",
-          icon: "favicon.ico",
+          url: "/",
+          icon: "/icons/taobao.png",
 
         },
         {
           name: "视频号",
-          url: "https://facebook.com/yourprofile",
-          icon: "favicon.ico",
+          url: "/",
+          icon: "/icons/wechat-tk.png",
 
         },
         {
           name: "小红书",
-          url: "https://youtube.com/yourprofile",
-          icon: "favicon.ico",
+          url: "/",
+          icon: "/icons/rednote.png",
         }
       ]
     };
@@ -263,10 +263,10 @@ export default {
 }
 
 .media-icon {
-  width: 2.4rem;
-  height: 2.4rem;
-  padding: 0.4rem;
-  border: 3px solid #c3c3c3;
+  width: 3rem;
+  height: 3rem;
+  /* padding: 0.4rem; */
+  /* border: 3px solid #c3c3c3; */
   margin: 0 1rem 0 0;
 }
 

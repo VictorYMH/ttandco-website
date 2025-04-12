@@ -4,15 +4,19 @@
             <img src="@/public/logo.png" alt="Logo">
         </div>
         <nav class="nav">
-            <ul>
-                <li @click="navigateTo('/')">首页</li>
-                <li @click="navigateTo('/about-us')">关于我们</li>
-                <li @click="navigateTo('/categories')">产品类别</li>
-                <li @click="navigateTo('/only-one-series')">“ONLY-ONE Series”</li>
-                <li @click="navigateTo('/sn-lookup')">防伪查询</li>
-                <li @click="navigateTo('/store')">店铺信息</li>
-                <!-- <li @click="navigateTo('/sn-lookup')">mini program</li>
-                <li @click="navigateTo('/store')">店铺信息</li> -->
+            <ul class="item-container">
+                <li class="nav-item" @click="navigateTo('/')">首页</li>
+                <li class="nav-item" @click="navigateTo('/about-us')">关于我们</li>
+                <li class="nav-item" @click="navigateTo('/categories')">产品类别</li>
+                <li class="nav-item" @click="navigateTo('/only-one-series')">“ONLY-ONE Series”</li>
+                <li class="nav-item" @click="navigateTo('/sn-lookup')">防伪查询</li>
+                <li class="nav-item" @click="navigateTo('/store')">店铺信息</li>
+            </ul>
+            <ul class="icon-container">
+                <li class="icon" @click="navigateTo('/store')"><img src="/icons/mini_program_grey.png" /></li>
+                <li class="icon" @click="navigateTo('/store')"><img src="/icons/taobao_grey.png" /></li>
+                <li class="icon" @click="navigateTo('/store')"><img src="/icons/wechat_tk_grey.png" /></li>
+                <li class="icon" @click="navigateTo('/store')"><img src="/icons/rednote_grey.png" /></li>
             </ul>
         </nav>
     </header>
@@ -50,14 +54,24 @@ export default {
     cursor: pointer;
 }
 
-.nav ul {
+.nav{
+    display: flex;
+    gap:4rem;
+}
+
+.nav .item-container,
+.nav .icon-container {
     display: flex;
     list-style: none;
     margin: 1rem 0 0;
     padding: 0;
 }
 
-.nav li {
+.nav .icon-container{
+    gap: .4rem;
+}
+
+.nav .nav-item {
     cursor: pointer;
     font-weight: bold;
     position: relative; /* Ensure proper positioning for pseudo-elements */
@@ -65,7 +79,12 @@ export default {
     padding: 0 2rem; /* Add spacing between text and the line */
 }
 
-.nav li:last-child {
+.nav .icon {
+    cursor: pointer;
+    position: relative;
+}
+
+.nav .nav-item:last-child {
     border-right: none; /* Remove the line from the last item */
 }
 

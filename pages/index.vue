@@ -1,7 +1,7 @@
 <template>
   <div class="homepage">
     <div class="carousel-container">
-      <NativeCarousel :items="heroCarouselItems" :topShadow="true" :visibleItems="1">
+      <NativeCarousel :items="heroCarouselItems" :topShadow="true" :visibleItems="1" :navButtonBackground="'rgba(0, 0, 0, 0.5)'">
         <template #default="{ item }">
           <img :src="item.image" :alt="item.alt" class="carousel-image" />
         </template>
@@ -16,12 +16,15 @@
         <div class="new-arrivals-carousel row">
           <NativeCarousel :items="newArrivals" :visibleItems="3">
             <template #default="{ item }">
-              <img :src="item.image" :alt="item.alt" class="new-arrivals-product" />
+              <div class="new-arrivals-wrapper">
+                <img :src="item.image" :alt="item.alt" class="new-arrivals-product" />
+                <img src="/icons/new.png" alt="new" class="new-arrivals-tag" />
+              </div>
             </template>
           </NativeCarousel>
         </div>
         <div class="product-carousel-container row">
-          <NativeCarousel :items="productCarouselItems" :topShadow="false" :visibleItems="1">
+          <NativeCarousel :items="productCarouselItems" :topShadow="false" :visibleItems="1" :navButtonBackground="'rgba(0, 0, 0, 0.5)'">
             <template #default="{ item }">
               <img :src="item.image" :alt="item.alt" class="carousel-image" />
               <div class="product-carousel-message">{{ item.message }}</div>
@@ -29,7 +32,7 @@
           </NativeCarousel>
         </div>
         <div class="product-carousel-container row">
-          <NativeCarousel :items="productCarouselItems" :topShadow="false" :visibleItems="1">
+          <NativeCarousel :items="productCarouselItems" :topShadow="false" :visibleItems="1" :navButtonBackground="'rgba(0, 0, 0, 0.5)'">
             <template #default="{ item }">
               <img :src="item.image" :alt="item.alt" class="carousel-image" />
               <div class="product-carousel-message">{{ item.message }}</div>
@@ -127,12 +130,12 @@ export default {
         { image: "/hero05.jpg", alt: "hero image 5", message: "ONLY-ONE Series" },
       ],
       topSellCategories: [
-        { image: "/hero01.jpg", alt: "hero image 1", message: "ONLY-ONE Series" },
-        { image: "/hero02.jpg", alt: "hero image 2", message: "ONLY-ONE Series" },
-        { image: "/hero03.jpg", alt: "hero image 3", message: "ONLY-ONE Series" },
-        { image: "/hero04.jpg", alt: "hero image 4", message: "ONLY-ONE Series" },
-        { image: "/hero05.jpg", alt: "hero image 5", message: "ONLY-ONE Series" },
-        { image: "/hero05.jpg", alt: "hero image 5", message: "ONLY-ONE Series" },
+        { image: "/top_sell_cat_1.jpg", alt: "hero image 1", message: "" },
+        { image: "/top_sell_cat_2.jpg", alt: "hero image 2", message: "" },
+        { image: "/top_sell_cat_3.jpg", alt: "hero image 3", message: "" },
+        { image: "/top_sell_cat_4.jpg", alt: "hero image 4", message: "" },
+        { image: "/top_sell_cat_5.jpg", alt: "hero image 5", message: "" },
+        { image: "/top_sell_cat_6.jpg", alt: "hero image 5", message: "" },
       ],
       allCategories: [
         {
@@ -208,15 +211,39 @@ export default {
   margin: 0 0 1rem 0;
 }
 
+.new-arrivals-wrapper {
+  padding: 1rem;
+  position: relative;
+}
+
 .new-arrivals-product {
   padding: 0.1rem;
   transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.new-arrivals-tag {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: 3rem;
+  transition: transform 0.3s ease;
+}
+
+.new-arrivals-tag:hover {
+  transform: scale(1.2);
 }
 
 .new-arrivals-product:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+.new-arrivals-product:hover + .new-arrivals-tag {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
 }
 
 .product-carousel-container {

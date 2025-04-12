@@ -13,8 +13,19 @@
                 <slot :item="item"></slot>
             </div>
         </div>
-        <button class="carousel-button prev" @click="prevSlide">‹</button>
-        <button class="carousel-button next" @click="nextSlide">›</button>
+        <button 
+            class="carousel-button prev" 
+            @click="prevSlide" 
+            :style="{ backgroundColor: navButtonBackground }"
+        >
+            <img src="/icons/left_arrow.png" />
+        </button>
+        <button 
+            class="carousel-button next" 
+            :style="{ backgroundColor: navButtonBackground }"
+            @click="nextSlide">
+            <img src="/icons/right_arrow.png" />
+        </button>
     </div>
 </template>
 
@@ -33,6 +44,10 @@ export default {
         visibleItems: {
             type: Number,
             default: 1, // Show 1 item by default
+        },
+        navButtonBackground: {
+            type: String,
+            default: 'transparent',
         },
     },
     data() {
@@ -111,10 +126,9 @@ export default {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.4);
     color: white;
     border: none;
-    padding: 0rem 0.8rem 0.4rem 1rem;
+    padding: 0.4rem;
     cursor: pointer;
     z-index: 1;
     font-size: 2.4rem;

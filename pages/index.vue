@@ -204,7 +204,7 @@ export default {
 }
 
 .products-column {
-  max-width: 40rem;
+  max-width: 50rem;
 }
 
 .products-column .row {
@@ -262,6 +262,10 @@ export default {
 
 .top-sell-wrapper {
   position: relative;
+}
+
+.top-sell-wrapper img {
+  width: 100%;
 }
 
 .top-sell-category-message {

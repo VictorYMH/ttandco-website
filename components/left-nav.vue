@@ -5,7 +5,7 @@
         <img src="@/public/logo.png" alt="Logo" class="logo" />
       </div>
       <div class="recommend-category">
-        <a href="/categories" class="recommend-category-link">新品推荐</a>
+        <a href="/" class="recommend-category-link">新品推荐</a>
       </div>
       <div class="search-container">
         <input
@@ -232,8 +232,7 @@ export default {
   align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: .3rem 1rem;
-
+  padding: 0.6rem 1rem;
 }
 
 .nav-item-header.expanded {

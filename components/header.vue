@@ -5,12 +5,18 @@
         </div>
         <nav class="nav">
             <ul class="item-container">
-                <li class="nav-item" @click="navigateTo('/')">首页</li>
-                <li class="nav-item" @click="navigateTo('/about-us')">关于我们</li>
-                <li class="nav-item" @click="navigateTo('/categories')">产品类别</li>
-                <li class="nav-item" @click="navigateTo('/only-one-series')">“ONLY-ONE Series”</li>
-                <li class="nav-item" @click="navigateTo('/sn-lookup')">防伪查询</li>
-                <li class="nav-item" @click="navigateTo('/store')">店铺信息</li>
+                <li class="nav-item" v-for="item in navItems" :key="item.label" @click="navigateTo(item.route)">
+                    <div class="item-title">{{ item.label }}</div>
+                    <div v-if="item.subNav" class="sub-nav">
+                        <div v-for="(column, columnIndex) in item.subNav" :key="columnIndex" class="sub-nav-column">
+                            <ul>
+                                <li v-for="subItem in column" :key="subItem.label" @click.stop="navigateTo(subItem.route)">
+                                    {{ subItem.label }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
             </ul>
             <ul class="icon-container">
                 <li class="icon" @click="navigateTo('/store')"><img src="/icons/mini_program_grey.png" /></li>
@@ -25,6 +31,31 @@
 <script>
 export default {
     name: 'GeneralHeader',
+    data() {
+        return {
+            navItems: [
+                { label: '首页', route: '/' },
+                { label: '关于我们', route: '/about-us' },
+                {
+                    label: '产品类别', route: '/categories', subNav: [[
+                        { label: '子类别1', route: '/categories/sub1' },
+                        { label: '子类别2', route: '/categories/sub2' },
+                        { label: '子类别2', route: '/categories/sub2' },
+                    ], [
+                        { label: '子类别1', route: '/categories/sub1' },
+                        { label: '子类别2', route: '/categories/sub2' },
+                        { label: '子类别2', route: '/categories/sub2' },
+                    ],[
+                        { label: '子类别1', route: '/categories/sub1' },
+                        { label: '子类别2', route: '/categories/sub2' },
+                    ]]
+                },
+                { label: '“ONLY-ONE Series”', route: '/only-one-series' },
+                { label: '防伪查询', route: '/sn-lookup' },
+                { label: '店铺信息', route: '/store' },
+            ]
+        };
+    },
     methods: {
         navigateTo(route) {
             this.$router.push(route);
@@ -38,7 +69,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 1rem 0;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-wrap: wrap;
@@ -54,9 +85,9 @@ export default {
     cursor: pointer;
 }
 
-.nav{
+.nav {
     display: flex;
-    gap:4rem;
+    gap: 4rem;
 }
 
 .nav .item-container,
@@ -67,25 +98,85 @@ export default {
     padding: 0;
 }
 
-.nav .icon-container{
-    gap: .4rem;
+.nav .icon-container {
+    gap: 0.4rem;
+}
+
+.nav .icon-container .icon {
+    width: 1.4rem;
 }
 
 .nav .nav-item {
     cursor: pointer;
     font-weight: bold;
-    position: relative; /* Ensure proper positioning for pseudo-elements */
-    border-right: 2px solid #3b3b3b; /* Add the vertical line */
-    padding: 0 2rem; /* Add spacing between text and the line */
-}
-
-.nav .icon {
-    cursor: pointer;
     position: relative;
+    padding: 0 2rem 1px;
 }
 
-.nav .nav-item:last-child {
-    border-right: none; /* Remove the line from the last item */
+.nav .nav-item::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 40%;
+    width: 1.5px;
+    background-color: black;
+    top: 10%;
+}
+
+.nav .nav-item:last-child::after {
+    content: none;
+}
+
+.nav .nav-item .item-title {
+    padding: 0 0 .6rem;
+    border-bottom: 2px solid transparent;
+    line-height: 1.2; 
+}
+
+.nav .nav-item:hover .item-title {
+    border-bottom-color: black;
+}
+
+.nav .nav-item:hover .sub-nav {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.sub-nav {
+    display: none;
+    position: fixed;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    margin: 0;
+    z-index: 10;
+    width: 100%;
+    padding: 1.4rem 16rem;
+}
+
+.sub-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: .6rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.18), transparent);
+    pointer-events: none;
+    z-index: 10;
+}
+
+.sub-nav li {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    white-space: nowrap;
+    list-style: none;
+    font-weight: 400;
+}
+
+.sub-nav li:hover {
+    font-weight: 500;
 }
 
 @media (max-width: 768px) {

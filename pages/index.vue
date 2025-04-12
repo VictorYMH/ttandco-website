@@ -212,7 +212,7 @@ export default {
 }
 
 .new-arrivals-wrapper {
-  padding: 1rem;
+  padding: 1.8rem;
   position: relative;
 }
 
@@ -224,9 +224,9 @@ export default {
 
 .new-arrivals-tag {
   position: absolute;
-  top: 0.5rem;
-  left: 0.5rem;
-  width: 3rem;
+  top: 2.2rem;
+  left: 1.4rem;
+  width: 2.7rem;
   transition: transform 0.3s ease;
 }
 

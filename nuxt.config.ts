@@ -11,5 +11,6 @@ export default defineNuxtConfig({
     }
   },
   devtools: { enabled: true },
-  compatibilityDate: '2025-03-22'
+  compatibilityDate: '2025-03-22',
+  plugins: ['~/plugins/preload-images.js'],
 })

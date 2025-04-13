@@ -130,12 +130,12 @@ export default {
         { image: "/hero05.jpg", alt: "hero image 5", message: "ONLY-ONE Series" },
       ],
       topSellCategories: [
-        { image: "/top_sell_cat_1.jpg", alt: "hero image 1", message: "" },
-        { image: "/top_sell_cat_2.jpg", alt: "hero image 2", message: "" },
-        { image: "/top_sell_cat_3.jpg", alt: "hero image 3", message: "" },
-        { image: "/top_sell_cat_4.jpg", alt: "hero image 4", message: "" },
-        { image: "/top_sell_cat_5.jpg", alt: "hero image 5", message: "" },
-        { image: "/top_sell_cat_6.jpg", alt: "hero image 5", message: "" },
+        { image: "/top_sell_cat_1.jpg", alt: "hero image 1", message: "ONLY-ONE Series" },
+        { image: "/top_sell_cat_2.jpg", alt: "hero image 2", message: "ONLY-ONE Series" },
+        { image: "/top_sell_cat_3.jpg", alt: "hero image 3", message: "ONLY-ONE Series" },
+        { image: "/top_sell_cat_4.jpg", alt: "hero image 4", message: "ONLY-ONE Series" },
+        { image: "/top_sell_cat_5.jpg", alt: "hero image 5", message: "ONLY-ONE Series" },
+        { image: "/top_sell_cat_6.jpg", alt: "hero image 5", message: "ONLY-ONE Series" },
       ],
       allCategories: [
         {

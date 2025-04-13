@@ -19,10 +19,10 @@
                 </li>
             </ul>
             <ul class="icon-container">
-                <li class="icon" @click="navigateTo('/store')"><img src="/icons/mini_program_grey.png" /></li>
-                <li class="icon" @click="navigateTo('/store')"><img src="/icons/taobao_grey.png" /></li>
-                <li class="icon" @click="navigateTo('/store')"><img src="/icons/wechat_tk_grey.png" /></li>
-                <li class="icon" @click="navigateTo('/store')"><img src="/icons/rednote_grey.png" /></li>
+                <li class="icon-item" @click="navigateTo('/store')"><div class="mini-program icon" src="/icons/mini_program_grey.png"></div></li>
+                <li class="icon-item" @click="navigateTo('/store')"><div class="taoabao icon" src="/icons/taobao_grey.png"></div></li>
+                <li class="icon-item" @click="navigateTo('/store')"><div class="wechat-tk icon" src="/icons/wechat_tk_grey.png"></div></li>
+                <li class="icon-item" @click="navigateTo('/store')"><div class="rednote icon" src="/icons/rednote_grey.png"></div></li>
             </ul>
         </nav>
     </header>
@@ -100,10 +100,51 @@ export default {
 
 .nav .icon-container {
     gap: 0.4rem;
+    margin: 0.2rem 0 0;
 }
 
-.nav .icon-container .icon {
+.nav .icon-container .icon-item {
     width: 1.4rem;
+}
+
+.nav .icon-container .icon-item .icon {
+    width: 100%;
+    height: 100%;
+    background-size: 1.4rem 1.4rem; /* Resize the image to fit the div */
+    background-repeat: no-repeat; /* Prevent tiling */
+    background-position: center; /* Center the image */
+}
+
+.nav .icon-container .icon-item .wechat-tk{
+    background-image: url('/icons/wechat_tk_grey.png');
+}
+
+.nav .icon-container .icon-item .rednote{    
+    background-image: url('/icons/rednote_grey.png');
+}
+
+.nav .icon-container .icon-item .taoabao{    
+    background-image: url('/icons/taobao_grey.png');
+}
+
+.nav .icon-container .icon-item .mini-program{
+    background-image: url('/icons/mini_program_grey.png');
+}
+
+.nav .icon-container .icon-item .wechat-tk:hover{
+    background-image: url('/icons/wechat_tk_orig.png');
+}
+
+.nav .icon-container .icon-item .rednote:hover{    
+    background-image: url('/icons/rednote_orig.png');
+}
+
+.nav .icon-container .icon-item .taoabao:hover{    
+    background-image: url('/icons/taobao_orig.png');
+}
+
+.nav .icon-container .icon-item .mini-program:hover{
+    background-image: url('/icons/mini_program_orig.png');
 }
 
 .nav .nav-item {

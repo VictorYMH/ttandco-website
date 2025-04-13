@@ -2,7 +2,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-column">
-                <div class="header-title">扫码访问TT&CO. 官方小程序</div>
+                <div class="header-title">TT&CO. 官方小程序</div>
                 <div class="mini-program-code-container">
                     <img src="@/public/mini_program_code.png" alt="Mini Program Code" class="mini-program-code">
                 </div>
@@ -89,7 +89,7 @@ export default {
 
 .footer-column .logo {
     max-width: 18rem;
-    margin: 5rem 0;
+    margin: 3rem 0;
 }
 
 .footer-link:hover, .social-link:hover {

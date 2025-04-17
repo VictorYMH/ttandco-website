@@ -309,7 +309,7 @@ export default {
 .section-title .header-line{
   height: 2px;
   flex: 1;
-  border-top: 3px solid black;
-  border-bottom: 1px solid black;
+  border-top: 3px solid #313131;
+  border-bottom: 1px solid #313131;
 }
 </style>

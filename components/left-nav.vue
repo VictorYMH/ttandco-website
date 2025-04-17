@@ -27,7 +27,7 @@
             viewBox="0 0 24 24"
             width="24"
             height="24"
-            style="background-color: black;"
+            style="background-color: #313131;"
             @click="handleSearch"
           >
             <circle cx="10" cy="10" r="7" stroke="white" stroke-width="2" fill="none" />
@@ -158,7 +158,7 @@ export default {
 }
 
 .recommend-category .recommend-category-link {
-  background: black;
+  background: #313131;
   color: white;
   padding: 0.4rem 1.8rem;
   font-size: 0.8rem;
@@ -195,7 +195,7 @@ export default {
 
 .divider {
   height: 2px;
-  background: black;
+  background: #313131;
   margin: 0.2rem 0;
 }
 
@@ -204,8 +204,8 @@ export default {
   text-align: center;
   padding: 0;
   line-height: 2.2rem;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid #313131;
+  border-bottom: 1px solid #313131;
   font-weight: 600;
 }
 
@@ -236,7 +236,7 @@ export default {
 }
 
 .nav-item-header.expanded {
-  background-color: black;
+  background-color: #313131;
   color: white;
 }
 
@@ -248,7 +248,7 @@ export default {
   list-style: none;
   padding: 0.4rem 1rem;
   background-color: #dedede;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #313131;
 }
 
 .sub-item {

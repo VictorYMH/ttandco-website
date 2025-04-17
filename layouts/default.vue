@@ -5,6 +5,7 @@
             <slot/>
         </div>
         <Footer class="default-layout-footer"/>
+        <ScrollToTop/>
     </div>
 </template>
 
@@ -12,6 +13,7 @@
 <script>
 import Header from '~/components/header.vue';
 import Footer from '~/components/footer.vue';
+import ScrollToTop from '~/components/scroll-to-top.vue';
 </script>
 <style scoped>
 .default-layout {

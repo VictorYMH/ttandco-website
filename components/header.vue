@@ -1,5 +1,5 @@
 <template>
-    <header class="header">
+    <header ref="header" class="header">
         <div class="logo" @click="navigateTo('/')">
             <img src="@/public/logo.png" alt="Logo">
         </div>
@@ -26,6 +26,7 @@
             </ul>
         </nav>
     </header>
+    <div class="header-placeholder" :style="{ height: headerHeight }"></div>
 </template>
 
 <script>
@@ -53,13 +54,27 @@ export default {
                 { label: '“ONLY-ONE Series”', route: '/only-one-series' },
                 { label: '防伪查询', route: '/sn-lookup' },
                 { label: '店铺信息', route: '/store' },
-            ]
+            ],
+            headerHeight: '184px' // Store the calculated height
         };
     },
     methods: {
         navigateTo(route) {
             this.$router.push(route);
+        },
+        updateHeaderHeight() {
+            const header = this.$refs.header;
+            if (header) {
+                this.headerHeight = `${header.offsetHeight}px`;
+            }
         }
+    },
+    mounted() {
+        this.updateHeaderHeight();
+        window.addEventListener('resize', this.updateHeaderHeight); // Recalculate on window resize
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.updateHeaderHeight);
     }
 }
 </script>
@@ -73,7 +88,17 @@ export default {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-wrap: wrap;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: position 0.3s, box-shadow 0.3s;
 }
+
+.header-placeholder {
+    display: block;
+}
+
 
 .logo {
     width: 100%;
@@ -160,7 +185,7 @@ export default {
     right: 0;
     height: 40%;
     width: 1.5px;
-    background-color: black;
+    background-color: #313131;
     top: 10%;
 }
 
@@ -175,7 +200,7 @@ export default {
 }
 
 .nav .nav-item:hover .item-title {
-    border-bottom-color: black;
+    border-bottom-color: #313131;
 }
 
 .nav .nav-item:hover .sub-nav {

@@ -20,7 +20,7 @@ async function getCategoryByUrl(url) {
 
   const category = categoryRows[0];
   const [productRows] = await pool.query(`
-    SELECT p.*, pp.*
+    SELECT p.*, pp.image_id, pp.image_url
     FROM products p
     JOIN product_per_category ppc ON p.product_id = ppc.product_id
     LEFT JOIN product_images pp ON p.product_id = pp.product_id

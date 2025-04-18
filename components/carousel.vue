@@ -1,37 +1,34 @@
 <template>
     <div class="carousel">
-        <div
-            class="carousel-container"
-            :style="{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }"
-        >
-            <div
-                :class="['carousel-item', { 'top-shadow': topShadow }]"
-                v-for="(item, index) in itemsWithClones"
-                :key="index"
-                :style="{ flex: `0 0 ${100 / visibleItems}%` }"
-            >
+        <div class="carousel-container" :style="{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }">
+            <div :class="['carousel-item', { 'top-shadow': topShadow }]" v-for="(item, index) in itemsWithClones"
+                :key="index" :style="{ flex: `0 0 ${100 / visibleItems}%` }">
                 <slot :item="item"></slot>
             </div>
         </div>
-        <button 
-            class="carousel-button prev" 
-            @click="prevSlide" 
-            :style="{ backgroundColor: navButtonBackground }"
-        >
+        <button v-if="enableSeeLargeButton" class="see-large-button" @click="openModal(currentIndex)">
+            放大图片
+        </button>
+        <button class="carousel-button prev" @click="prevSlide" :style="{ backgroundColor: navButtonBackground }">
             <img src="/icons/left_arrow.png" />
         </button>
-        <button 
-            class="carousel-button next" 
-            :style="{ backgroundColor: navButtonBackground }"
-            @click="nextSlide">
+        <button class="carousel-button next" :style="{ backgroundColor: navButtonBackground }" @click="nextSlide">
             <img src="/icons/right_arrow.png" />
         </button>
+
+        <Modal v-model="isModalOpen">
+            <div class="modal-content" @click.stop>
+                <img :src="selectedImage" alt="Large View" />
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
+import Modal from './modal.vue';
 export default {
     name: "Carousel",
+    components: { Modal },
     props: {
         items: {
             type: Array,
@@ -49,10 +46,16 @@ export default {
             type: String,
             default: 'transparent',
         },
+        enableSeeLargeButton: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
             currentIndex: 0,
+            isModalOpen: false,
+            selectedImage: null,
         };
     },
     computed: {
@@ -83,6 +86,14 @@ export default {
                     this.currentIndex = this.items.length - 1;
                 }, 500); // Match the transition duration
             }
+        },
+        openModal(currentIndex) {
+            this.selectedImage = this.items[currentIndex-1].image_url;
+            this.isModalOpen = true;
+        },
+        closeModal() {
+            this.isModalOpen = false;
+            this.selectedImage = null;
         },
     },
     mounted() {
@@ -141,5 +152,46 @@ export default {
 
 .carousel-button.next {
     right: 0;
+}
+
+.see-large-button {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    color: #717171;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    background: transparent;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>

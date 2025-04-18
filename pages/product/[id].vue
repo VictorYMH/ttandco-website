@@ -5,7 +5,7 @@
       <div class="product-content-container">
         <div class="product-image-carousel-column" v-if="product && product.images && product.images.length">
           <NativeCarousel :items="product.images" :topShadow="false" :visibleItems="1"
-            :navButtonBackground="'transparent'">
+            :navButtonBackground="'transparent'" :enableSeeLargeButton="true">
             <template #default="{ item }">
               <div class="product-image-wrapper">
                 <img :src="item.image_url" class="product-image" />
@@ -16,10 +16,16 @@
         <div class="product-text-column">
           <div class="product-name">{{ product.name }}</div>
           <div class="product-code">商品编号 {{ product.name }}</div>
-          <div class="product-description">{{ product.description }}</div>
+          <div class="product-listed-description" v-html="product.listed_description"></div>
           <div class="mini-program-button">
-            前往微信小程序订制购买
+            前往微信商城选购
           </div>
+          <div class="share-container">
+            <div>分享</div>
+            <div class="wechat"><img src="/icons/wechat_tk_grey.png"></div>
+          </div>
+        </div>
+        <div class="product-description"  v-html="product.description">
         </div>
       </div>
     </div>
@@ -27,12 +33,14 @@
       <p>Product not found</p>
     </div>
   </div>
+  <RecentlyViewed />
 </template>
 
 <script setup>
 import { useRoute } from 'vue-router'
 import { useAsyncData } from '#app'
 import NativeCarousel from '~/components/carousel.vue';
+import RecentlyViewed from '~/components/recently-viewed.vue';
 
 definePageMeta({
   layout: 'left-nav-layout'
@@ -63,12 +71,13 @@ if (error.value) {
 
 .product-content-container {
   display: flex;
-  padding: 2.4rem 0;
+  margin: 1.6rem 0;
   gap: 1.2rem;
+  flex-wrap: wrap;
 }
 
 .product-image-carousel-column {
-  width: 60%;
+  flex: 0 0 60%; /* Fixed 60% width */
 }
 
 .product-image-wrapper {
@@ -76,22 +85,36 @@ if (error.value) {
 }
 
 .product-text-column {
-  width: 40%;
+  flex: 1; /* Fills the remaining space */
 }
 
 .product-name {
   line-height: 1.6;
   font-weight: 500;
-  padding: 1rem 0;
+  padding: 1rem 0 0;
   font-size: 1.2rem;
 }
 
+.product-code{
+  margin: .4rem 0 .8rem;
+  font-size: .9rem;
+}
+.product-listed-description {
+  margin: 0 0 .8rem;
+  font-size: .9rem;
+}
 .product-code,
-.product-description {
+.product-listed-description {
   color: #717171;
   line-height: 1.2;
   word-wrap: break-word;
-  padding: .8rem 0;
+}
+
+::v-deep(.product-listed-description ul) {
+  margin: 0;
+  padding: 0;
+  list-style-type: disc;
+  list-style-position: inside;
 }
 
 .mini-program-button {
@@ -103,5 +126,21 @@ if (error.value) {
   border-radius: 0.4rem;
   text-align: center;
   cursor: pointer;
+}
+
+.share-container {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1.2rem 0 0;
+  font-size: 0.8rem;
+  color: #313131;
+}
+
+.wechat{
+  width:1.4rem;
+}
+.product-description {
+  flex: 0 0 100%; /* Full width row */
 }
 </style>

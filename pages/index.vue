@@ -23,6 +23,16 @@
             </template>
           </NativeCarousel>
         </div>
+        <div class="top-products-carousel row">
+          <NativeCarousel :items="newArrivals" :visibleItems="3">
+            <template #default="{ item, index }">
+              <div class="top-products-wrapper">
+                <img :src="item.image" :alt="item.alt" class="top-product" />
+                <img v-if="index < 3" :src="'/top' + (index + 1) + '_tag.png'" :alt="'Top ' + (index + 1)" class="top-product-tag" />
+              </div>
+            </template>
+          </NativeCarousel>
+        </div>
         <div class="product-carousel-container row">
           <NativeCarousel :items="productCarouselItems" :topShadow="false" :visibleItems="1" :navButtonBackground="'rgba(0, 0, 0, 0.5)'">
             <template #default="{ item }">
@@ -48,6 +58,13 @@
               </div>
             </template>
           </TopSellCategories>
+        </div>
+        <div class="trending-categories-container row">
+            <template v-for="(item, index) in trendingCategories" :key="index">
+              <div class="trending-category">
+                <img :src="item.image" :alt="item.alt" class="top-sell-category-image" />
+              </div>
+            </template>
         </div>
         <div class="all-categories row">
           <div class="all-categories-header section-title">
@@ -184,6 +201,11 @@ export default {
           message: "ONLY-ONE Series"
         },
       ],
+      trendingCategories: [
+        { image: "/trending_category_1.jpg", alt: "trending category 1" },
+        { image: "/trending_category_2.jpg", alt: "trending category 1" },
+        { image: "/trending_category_2.jpg", alt: "trending category 1" },
+      ],
     };
   },
   mounted() {
@@ -211,15 +233,29 @@ export default {
   margin: 0 0 1rem 0;
 }
 
+.top-products-carousel {
+  display: none;
+}
+
+.top-products-wrapper,
 .new-arrivals-wrapper {
   padding: 1.8rem;
   position: relative;
 }
 
+.top-product,
 .new-arrivals-product {
   padding: 0.1rem;
   transition: box-shadow 0.3s ease;
   transition: all 0.3s ease;
+}
+
+.top-product-tag {
+  position: absolute;
+  top: 2.2rem;
+  left: 1.4rem;
+  width: 2.7rem;
+  transition: transform 0.3s ease;
 }
 
 .new-arrivals-tag {
@@ -234,6 +270,7 @@ export default {
   transform: scale(1.2);
 }
 
+.top-product:hover,
 .new-arrivals-product:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
@@ -241,6 +278,7 @@ export default {
   transition: transform 0.3s ease;
 }
 
+.top-product:hover + .top-product-tag,
 .new-arrivals-product:hover + .new-arrivals-tag {
   transform: scale(1.2);
   transition: transform 0.3s ease;
@@ -280,6 +318,10 @@ export default {
   font-size: 0.9rem;
 }
 
+.trending-categories-container{
+  display: none;
+}
+
 .all-categories-header{
   display: flex;  
   justify-content: center;
@@ -311,5 +353,70 @@ export default {
   flex: 1;
   border-top: 3px solid #313131;
   border-bottom: 1px solid #313131;
+}
+
+@media screen and (max-width: 576px) {
+  .left-nav {
+    display: none;
+  }
+  .product-category-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .products-column {
+    max-width: 100%;
+  }
+
+  
+  .top-products-carousel {
+    display: block;
+  }
+
+  .top-products-wrapper,
+  .new-arrivals-wrapper {
+    padding: 1rem;
+  }
+
+  .new-arrivals-product:hover {
+    transform: scale(1.02);
+  }
+
+  .all-categories-header {
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: 0;
+  }
+
+  .all-categories-title {
+    font-size: 1.2rem;
+  }
+
+  .all-categories-image-wrapper {
+    padding: 0.5rem;
+  }
+
+  .all-categories-message {
+    font-size: 0.8rem;
+  }
+
+  .top-sell-category-message {
+    font-size: 0.8rem;
+    padding: 0.1rem 0;
+  }
+
+  .trending-categories-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .products-column .trending-categories-container {
+    margin: 0;
+  }
+
+  .trending-category {
+    width: 100%;
+  }
 }
 </style>

@@ -1,14 +1,11 @@
 <template>
-  <div>
-    <h1>{{ category.name }}</h1>
-    <p>{{ category.description }}</p>
-    <div v-if="category.products && category.products.length">
-      <div class="product-list">
-        <!-- <ProductCard v-for="product in category.products" :key="product.product_id" :product="product" /> -->
-      </div>
-      <RecentlyViewed />
+  <div class="category-container">
+    <h1 class="category-title">{{ categoryData.category.name }}</h1>
+    <div class="description" v-html="categoryData.category.description"></div>
+    <RecentlyViewed />
+    <div v-if="categoryData.products && categoryData.products.length">
       <div class="paging-message">{{ totalCount }}件中的{{ start }}-{{ end }}件表示</div>
-      <AllCategories :categories="category.products">
+      <AllCategories :categories="categoryData.products">
         <template #default="{ item }">
           <div class="product-card-wrapper">
             <div class="product-card-wrapper">
@@ -18,7 +15,7 @@
         </template>
       </AllCategories>
     </div>
-    <div v-else>
+    <div class="not-found-message" v-else>
       <p>No products available in this category.</p>
     </div>
   </div>
@@ -39,62 +36,14 @@ definePageMeta({
 const route = useRoute();
 const categoryUrl = route.params.category;
 
-const { data: category, error } = await useAsyncData(`category-${categoryUrl}`, () =>
+const { data: categoryData, error } = await useAsyncData(`category-${categoryUrl}`, () =>
   $fetch(`/api/categories?url=${categoryUrl}`)
 )
-const
-  allCategories = [
-    {
-      image: "/product1.jpg",
-      alt: "New Arrival 1",
-      message: "ONLY-ONE Series"
-    },
-    {
-      image: "/product2.jpg",
-      alt: "New Arrival 2",
-      message: "Sports"
-    },
-    {
-      image: "/product3.jpg",
-      alt: "New Arrival 3",
-      message: "ONLY-ONE Series"
-    },
-    {
-      image: "/product4.jpg",
-      alt: "New Arrival 4",
-      message: "ONLY-ONE Series"
-    },
-    {
-      image: "/product1.jpg",
-      alt: "New Arrival 1",
-      message: "ONLY-ONE Series"
-    },
-    {
-      image: "/product2.jpg",
-      alt: "New Arrival 2",
-      message: "Sports"
-    },
-    {
-      image: "/product2.jpg",
-      alt: "New Arrival 2",
-      message: "Sports"
-    },
-    {
-      image: "/product3.jpg",
-      alt: "New Arrival 3",
-      message: "ONLY-ONE Series"
-    },
-    {
-      image: "/product4.jpg",
-      alt: "New Arrival 4",
-      message: "ONLY-ONE Series"
-    },
-  ];
 
 
-  const totalCount = computed(() => category.value?.products?.length || 0);
-  const start = computed(() => (totalCount.value > 0 ? 1 : 0));
-  const end = computed(() => totalCount.value);
+const totalCount = computed(() => categoryData.value?.products?.length || 0);
+const start = computed(() => (totalCount.value > 0 ? 1 : 0));
+const end = computed(() => totalCount.value);
 
 if (error.value) {
   console.error('Failed to fetch category:', error.value)
@@ -102,14 +51,20 @@ if (error.value) {
 </script>
 
 <style scoped>
-.product-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+.category-container {
+  padding: 3.2rem 0;
 }
 
-.all-categories-header{
-  display: flex;  
+.category-title {
+  background-color: #313131;
+  color: white;
+  padding: .2rem 1rem;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.all-categories-header {
+  display: flex;
   justify-content: center;
   margin: 2rem 0 1rem;
   flex-wrap: nowrap;
@@ -117,14 +72,14 @@ if (error.value) {
   gap: 1.6rem;
 }
 
-.all-categories-title{
+.all-categories-title {
   text-align: center;
   font-size: 1.1rem;
   font-weight: 600;
   min-width: fit-content;
 }
 
-.all-categories-image-wrapper{
+.all-categories-image-wrapper {
   padding: 1rem;
 }
 
@@ -134,8 +89,13 @@ if (error.value) {
   font-size: .9rem;
 }
 
-.paging-message{
+.paging-message {
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+.not-found-message {
+  width: 100%;
+
 }
 </style>

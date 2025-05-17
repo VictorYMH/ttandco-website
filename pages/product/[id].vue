@@ -1,7 +1,7 @@
 <template>
   <div class="product-detail-container">
     <div v-if="product">
-      <div class="product-header">{{ product.name }}</div>
+      <h1 class="product-header">{{ product.name }}</h1>
       <div class="product-content-container">
         <div class="product-image-carousel-column" v-if="product && product.images && product.images.length">
           <NativeCarousel :items="product.images" :topShadow="false" :visibleItems="1"
@@ -65,8 +65,9 @@ if (error.value) {
 .product-header {
   background-color: #313131;
   color: white;
-  padding: .2rem 1rem;
-
+  padding: 0 1rem .2rem;
+  font-size: 1rem;
+  margin: 0;
 }
 
 .product-content-container {

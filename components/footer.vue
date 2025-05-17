@@ -109,5 +109,9 @@ export default {
     text-decoration: underline;
 }
 
-@media (max-width: 576) {}
+@media (max-width: 576px) {
+    .footer-container {
+        display: none;
+    }
+}
 </style>

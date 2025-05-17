@@ -10,10 +10,16 @@
             放大图片
         </button>
         <button class="carousel-button prev" @click="prevSlide" :style="{ backgroundColor: navButtonBackground }">
-            <img src="/icons/left_arrow.png" />
+            <picture>
+                <source srcset="/icons/left_arrow_sm.png" media="(max-width: 576px)" />
+                <img src="/icons/left_arrow.png" alt="Previous" />
+            </picture>
         </button>
         <button class="carousel-button next" :style="{ backgroundColor: navButtonBackground }" @click="nextSlide">
-            <img src="/icons/right_arrow.png" />
+            <picture>
+                <source srcset="/icons/right_arrow_sm.png" media="(max-width: 576px)" />
+                <img src="/icons/right_arrow.png" alt="Previous" />
+            </picture>
         </button>
 
         <Modal v-model="isModalOpen">
@@ -194,4 +200,5 @@ export default {
     max-width: 100%;
     max-height: 100%;
 }
+
 </style>

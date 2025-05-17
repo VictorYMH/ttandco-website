@@ -142,8 +142,8 @@ export default {
 
 <style scoped>
 .left-nav {
-  background-color: #fff;
-  padding: 1.6rem;
+  background-color: #fff;    
+  padding: 3.2rem 1.6rem;
   width: fit-content;
 }
 

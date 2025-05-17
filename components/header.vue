@@ -1,16 +1,20 @@
 <template>
     <header ref="header" class="header">
+        <div class="side-menu">
+            <img class="side-menu-icon" src="@/public/icons/side-menu.png" alt="side-menu"></div>
         <div class="logo" @click="navigateTo('/')">
             <img src="@/public/logo.png" alt="Logo">
         </div>
         <nav class="nav">
             <ul class="item-container">
-                <li class="nav-item" v-for="item in navItems" :key="item.label" @click="navigateTo(item.route)">
+                <li class="nav-item" v-for="item in navItems" :key="item.label" @click="navigateTo(item.route)"
+                    :class="{ selected: isSelected(item.route) }">
                     <div class="item-title">{{ item.label }}</div>
                     <div v-if="item.subNav" class="sub-nav">
                         <div v-for="(column, columnIndex) in item.subNav" :key="columnIndex" class="sub-nav-column">
                             <ul>
-                                <li v-for="subItem in column" :key="subItem.label" @click.stop="navigateTo(subItem.route)">
+                                <li v-for="subItem in column" :key="subItem.label"
+                                    @click.stop="navigateTo(subItem.route)">
                                     {{ subItem.label }}
                                 </li>
                             </ul>
@@ -19,10 +23,18 @@
                 </li>
             </ul>
             <ul class="icon-container">
-                <li class="icon-item" @click="navigateTo('/store')"><div class="mini-program icon" src="/icons/mini_program_grey.png"></div></li>
-                <li class="icon-item" @click="navigateTo('/store')"><div class="taoabao icon" src="/icons/taobao_grey.png"></div></li>
-                <li class="icon-item" @click="navigateTo('/store')"><div class="wechat-tk icon" src="/icons/wechat_tk_grey.png"></div></li>
-                <li class="icon-item" @click="navigateTo('/store')"><div class="rednote icon" src="/icons/rednote_grey.png"></div></li>
+                <li class="icon-item" @click="navigateTo('/store')">
+                    <div class="mini-program icon"></div>
+                </li>
+                <li class="icon-item" @click="navigateTo('/store')">
+                    <div class="taoabao icon"></div>
+                </li>
+                <li class="icon-item" @click="navigateTo('/store')">
+                    <div class="wechat-tk icon"></div>
+                </li>
+                <li class="icon-item" @click="navigateTo('/store')">
+                    <div class="rednote icon"></div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -46,7 +58,7 @@ export default {
                         { label: '子类别1', route: '/categories/sub1' },
                         { label: '子类别2', route: '/categories/sub2' },
                         { label: '子类别2', route: '/categories/sub2' },
-                    ],[
+                    ], [
                         { label: '子类别1', route: '/categories/sub1' },
                         { label: '子类别2', route: '/categories/sub2' },
                     ]]
@@ -55,7 +67,7 @@ export default {
                 { label: '防伪查询', route: '/sn-lookup' },
                 { label: '店铺信息', route: '/store' },
             ],
-            headerHeight: '184px' // Store the calculated height
+            headerHeight: '0px' // Store the calculated height
         };
     },
     methods: {
@@ -66,12 +78,21 @@ export default {
             const header = this.$refs.header;
             if (header) {
                 this.headerHeight = `${header.offsetHeight}px`;
+                console.log(header.offsetHeight);
             }
+        },
+        isSelected(route) {
+            return this.$route.path === route;
         }
     },
     mounted() {
         this.updateHeaderHeight();
         window.addEventListener('resize', this.updateHeaderHeight); // Recalculate on window resize
+        
+        // // Update header height after every route change
+        // this.$router.afterEach(() => {
+        //     this.updateHeaderHeight();
+        // });
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.updateHeaderHeight);
@@ -99,6 +120,9 @@ export default {
     display: block;
 }
 
+.side-menu {
+    display: none;
+}
 
 .logo {
     width: 100%;
@@ -135,40 +159,43 @@ export default {
 .nav .icon-container .icon-item .icon {
     width: 100%;
     height: 100%;
-    background-size: 1.4rem 1.4rem; /* Resize the image to fit the div */
-    background-repeat: no-repeat; /* Prevent tiling */
-    background-position: center; /* Center the image */
+    background-size: 1.4rem 1.4rem;
+    /* Resize the image to fit the div */
+    background-repeat: no-repeat;
+    /* Prevent tiling */
+    background-position: center;
+    /* Center the image */
 }
 
-.nav .icon-container .icon-item .wechat-tk{
+.nav .icon-container .icon-item .wechat-tk {
     background-image: url('/icons/wechat_tk_grey.png');
 }
 
-.nav .icon-container .icon-item .rednote{    
+.nav .icon-container .icon-item .rednote {
     background-image: url('/icons/rednote_grey.png');
 }
 
-.nav .icon-container .icon-item .taoabao{    
+.nav .icon-container .icon-item .taoabao {
     background-image: url('/icons/taobao_grey.png');
 }
 
-.nav .icon-container .icon-item .mini-program{
+.nav .icon-container .icon-item .mini-program {
     background-image: url('/icons/mini_program_grey.png');
 }
 
-.nav .icon-container .icon-item .wechat-tk:hover{
+.nav .icon-container .icon-item .wechat-tk:hover {
     background-image: url('/icons/wechat_tk_orig.png');
 }
 
-.nav .icon-container .icon-item .rednote:hover{    
+.nav .icon-container .icon-item .rednote:hover {
     background-image: url('/icons/rednote_orig.png');
 }
 
-.nav .icon-container .icon-item .taoabao:hover{    
+.nav .icon-container .icon-item .taoabao:hover {
     background-image: url('/icons/taobao_orig.png');
 }
 
-.nav .icon-container .icon-item .mini-program:hover{
+.nav .icon-container .icon-item .mini-program:hover {
     background-image: url('/icons/mini_program_orig.png');
 }
 
@@ -196,9 +223,10 @@ export default {
 .nav .nav-item .item-title {
     padding: 0 0 .6rem;
     border-bottom: 2px solid transparent;
-    line-height: 1.2; 
+    line-height: 1.2;
 }
 
+.nav .nav-item.selected .item-title,
 .nav .nav-item:hover .item-title {
     border-bottom-color: #313131;
 }
@@ -245,14 +273,67 @@ export default {
     font-weight: 500;
 }
 
-@media (max-width: 768px) {
-    .nav ul {
-        flex-direction: column;
-        align-items: center;
+@media (max-width: 576px) {
+    .header {
+        align-items: flex-end;
+        padding: 1rem 0;
+        justify-content: space-between;
+    }
+    .side-menu {
+        display: block;
+        flex: 1 1 30%;
+        max-width: 30%;
+        margin: 0 0 0 1rem;
     }
 
-    .nav li {
-        margin: 0.5rem 0;
+    .side-menu .side-menu-icon {
+        width: 1rem;
+        cursor: pointer;
+    }
+
+    .logo {
+        width: 36%;
+        margin: 0 auto; /* Centers the second column horizontally */
+    }
+    .nav{
+        flex: 1 1 30%;
+        max-width: 30%;
+    }
+    .nav .item-container {
+        display: none;
+    }
+
+    
+    .nav .icon-container {
+        gap: 0.2rem;
+        margin: 0 0;
+        width: 30%;
+    }
+
+    .nav .icon-container .icon-item {
+        width: unset;
+    }
+
+    .nav .icon-container .icon-item .icon {
+        width: 1.4rem;
+        height: 1.4rem;
+        background-size: cover;
+    }
+    
+    .nav .icon-container .icon-item .wechat-tk {
+        background-image: url('/icons/wechat_tk_sq.png');
+    }
+
+    .nav .icon-container .icon-item .rednote {
+        background-image: url('/icons/rednote_sq.png');
+    }
+
+    .nav .icon-container .icon-item .taoabao {
+        background-image: url('/icons/taobao_sq.png');
+    }
+
+    .nav .icon-container .icon-item .mini-program {
+        background-image: url('/icons/mini_program_sq.png');
     }
 }
 </style>

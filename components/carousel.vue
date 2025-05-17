@@ -1,9 +1,18 @@
 <template>
     <div class="carousel">
-        <div class="carousel-container" :style="{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }">
-            <div :class="['carousel-item', { 'top-shadow': topShadow }]" v-for="(item, index) in itemsWithClones"
-                :key="index" :style="{ flex: `0 0 ${100 / visibleItems}%` }">
-                <slot :item="item"></slot>
+        <div 
+            class="carousel-container" 
+            ref="carouselContainer"
+            :style="containerStyle"
+            @transitionend="handleTransitionEnd"
+        >
+            <div 
+                :class="['carousel-item', { 'top-shadow': topShadow }]" 
+                v-for="(item, index) in displayItems"
+                :key="`carousel-item-${index}`" 
+                :style="{ flex: `0 0 ${100 / visibleItems}%` }"
+            >
+                <slot :item="item" :index="normalizeDisplayIndex(index)"></slot>
             </div>
         </div>
         <button v-if="enableSeeLargeButton" class="see-large-button" @click="openModal(currentIndex)">
@@ -62,50 +71,101 @@ export default {
             currentIndex: 0,
             isModalOpen: false,
             selectedImage: null,
+            isTransitioning: false,
+            transitionEnabled: true,
         };
     },
     computed: {
-        itemsWithClones() {
-            // Add clones of the first and last items for infinite looping
+        displayItems() {
+            // Create the display array with enough items for smooth scrolling
+            if (!this.items.length) return [];
+            
+            // We need items before and after for smooth scrolling
             return [
-                ...this.items.slice(-this.visibleItems),
-                ...this.items,
-                ...this.items.slice(0, this.visibleItems),
+                ...this.items.slice(-this.visibleItems),  // Last N items at the beginning
+                ...this.items,                            // Original items in the middle
+                ...this.items.slice(0, this.visibleItems) // First N items at the end
             ];
         },
+        containerStyle() {
+            return {
+                transform: `translateX(-${(this.currentIndex + this.visibleItems) * (100 / this.visibleItems)}%)`,
+                transition: this.transitionEnabled ? 'transform 0.5s ease-in-out' : 'none'
+            };
+        },
+        actualIndex() {
+            // Convert currentIndex to the actual index in the original items array
+            return this.normalizeIndex(this.currentIndex);
+        }
     },
     methods: {
-        nextSlide() {
-            this.currentIndex++;
-            if (this.currentIndex > this.items.length) {
-                // Reset to the first item (after clones)
-                setTimeout(() => {
-                    this.currentIndex = this.visibleItems;
-                }, 500); // Match the transition duration
+        normalizeIndex(index) {
+            const length = this.items.length;
+            return ((index % length) + length) % length;
+        },
+        normalizeDisplayIndex(index) {
+            // Convert display index to the original items array index
+            if (index < this.visibleItems) {
+                // It's a prefix clone, map to the end of the original array
+                return this.items.length - this.visibleItems + index;
+            } else if (index >= this.visibleItems + this.items.length) {
+                // It's a suffix clone, map to the beginning of the original array
+                return index - this.items.length - this.visibleItems;
+            } else {
+                // It's from the original array
+                return index - this.visibleItems;
             }
+        },
+        nextSlide() {
+            if (this.isTransitioning) return;
+            this.isTransitioning = true;
+            this.currentIndex++;
         },
         prevSlide() {
+            if (this.isTransitioning) return;
+            this.isTransitioning = true;
             this.currentIndex--;
-            if (this.currentIndex < 0) {
-                // Reset to the last item (before clones)
-                setTimeout(() => {
-                    this.currentIndex = this.items.length - 1;
-                }, 500); // Match the transition duration
+        },
+        handleTransitionEnd() {
+            this.isTransitioning = false;
+            
+            // If we've moved beyond the original items (into the cloned area)
+            if (this.currentIndex >= this.items.length) {
+                // Jump to the beginning without animation
+                this.transitionEnabled = false;
+                this.currentIndex = 0;
+                // Force reflow before re-enabling transitions
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.transitionEnabled = true;
+                    }, 5);
+                });
+            } else if (this.currentIndex < 0) {
+                // Jump to the end without animation
+                this.transitionEnabled = false;
+                this.currentIndex = this.items.length - 1;
+                // Force reflow before re-enabling transitions
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.transitionEnabled = true;
+                    }, 5);
+                });
             }
         },
-        openModal(currentIndex) {
-            this.selectedImage = this.items[currentIndex-1].image_url;
+        openModal(index) {
+            const actualIndex = this.normalizeIndex(index);
+            this.selectedImage = this.items[actualIndex].image_url;
             this.isModalOpen = true;
         },
         closeModal() {
             this.isModalOpen = false;
             this.selectedImage = null;
-        },
+        }
     },
     mounted() {
-        // Start at the first real item (after clones)
-        this.currentIndex = this.visibleItems;
-    },
+        // Set initial position to first real item
+        this.currentIndex = 0;
+    }
 };
 </script>
 
@@ -118,7 +178,6 @@ export default {
 
 .carousel-container {
     display: flex;
-    transition: transform 0.5s ease-in-out;
     will-change: transform;
 }
 
@@ -200,5 +259,4 @@ export default {
     max-width: 100%;
     max-height: 100%;
 }
-
 </style>

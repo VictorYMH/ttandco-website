@@ -28,7 +28,7 @@
             <template #default="{ item, index }">
               <div class="top-products-wrapper">
                 <img :src="item.image" :alt="item.alt" class="top-product" />
-                <img v-if="index < 3" :src="'/top' + (index + 1) + '_tag.png'" :alt="'Top ' + (index + 1)" class="top-product-tag" />
+                <img v-if="index < 3" :src="'/icons/top' + (index + 1) + '_tag.png'" :alt="'Top ' + (index + 1)" class="top-product-tag" />
               </div>
             </template>
           </NativeCarousel>

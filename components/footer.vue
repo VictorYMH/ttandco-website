@@ -23,7 +23,7 @@
                     <div class="header-title">联系我们</div>
                     <div class="footer-links">
                         <router-link to="/customer-service" class="footer-link">官方咨询</router-link>
-                        <a href="mailto:contact@ttandco.com" class="footer-link">Email: lcontact@ttandco.com</a>
+                        <a href="mailto:ttandcochina@gmail.com" class="footer-link">Email: ttandcochina@gmail.com</a>
                     </div>
                 </div>
 

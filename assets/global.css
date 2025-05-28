@@ -30,3 +30,12 @@ img {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
   }
+
+@media screen and (min-width: 1280px) {
+    html {
+        --max-content-width: 1200px;
+    }
+    .content-wrapper {
+        max-width: var(--max-content-width);
+    }
+}

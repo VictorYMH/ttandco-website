@@ -20,6 +20,7 @@ import ScrollToTop from '~/components/scroll-to-top.vue';
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background: white;
 }
 
 .default-layout-header {
@@ -32,5 +33,8 @@ import ScrollToTop from '~/components/scroll-to-top.vue';
 
 .content-wrapper {
     flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
 }
 </style>

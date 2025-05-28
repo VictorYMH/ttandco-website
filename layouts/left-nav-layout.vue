@@ -40,6 +40,7 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background: white;
 }
 
 .left-nav-layout-header {
@@ -54,7 +55,7 @@ export default {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    background: white;
+    margin: 0 auto;
 }
 .content {
     max-width: 50rem;

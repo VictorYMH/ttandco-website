@@ -110,8 +110,48 @@ export default {
 }
 
 @media (max-width: 576px) {
-    .footer-container {
-        display: none;
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .footer-column {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .header-title {
+        font-size: 1rem;
+        margin: 0 0 0.8rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    .footer-link {
+        font-size: 0.9rem;
+        line-height: 1.6rem;
+        padding: 0.2rem 0;
+    }
+
+    .footer-column .mini-program-code-container {
+        max-width: 8rem;
+        margin: 0.8rem auto;
+    }
+
+    .footer-column .logo {
+        max-width: 12rem;
+        margin: 1.5rem auto;
+    }
+
+    .footer-column .subscribe-message {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
     }
 }
 </style>

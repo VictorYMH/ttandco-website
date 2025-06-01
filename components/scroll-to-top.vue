@@ -55,4 +55,10 @@ export default {
 .scroll-to-top-icon {
     width: 16px;
 }
+
+@media screen and (max-width: 576px) {
+    .scroll-to-top {
+        font-size: .8rem;
+    }
+}
 </style>

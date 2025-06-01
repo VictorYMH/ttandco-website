@@ -226,7 +226,7 @@ export default {
 }
 
 .products-column {
-  max-width: 50rem;
+  /* max-width: 50rem; */
 }
 
 .products-column .row {

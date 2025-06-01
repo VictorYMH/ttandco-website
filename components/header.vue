@@ -1,7 +1,7 @@
 <template>
     <header ref="header" class="header">
         <div class="side-menu">
-            <img class="side-menu-icon" src="@/public/icons/side-menu.png" alt="side-menu"></div>
+            <img class="side-menu-icon" src="@/public/icons/side-menu.png" alt="side-menu" @click="toggleMobileNav"></div>
         <div class="logo" @click="navigateTo('/')">
             <img src="@/public/logo.png" alt="Logo">
         </div>
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { useHeaderHeight } from '~/composables/useHeaderHeight';
+
 export default {
     name: 'GeneralHeader',
     data() {
@@ -66,36 +68,42 @@ export default {
                 { label: '“ONLY-ONE Series”', route: '/only-one-series' },
                 { label: '防伪查询', route: '/sn-lookup' },
                 { label: '店铺信息', route: '/store' },
-            ],
-            headerHeight: '0px' // Store the calculated height
+            ]
         };
+    },
+    setup() {
+        const { headerHeight, updateHeaderHeight } = useHeaderHeight()
+        
+        return {
+            headerHeight,
+            updateHeaderHeight
+        }
     },
     methods: {
         navigateTo(route) {
             this.$router.push(route);
         },
-        updateHeaderHeight() {
+        handleHeaderHeightUpdate() {
             const header = this.$refs.header;
             if (header) {
-                this.headerHeight = `${header.offsetHeight}px`;
-                console.log(header.offsetHeight);
+                this.updateHeaderHeight(header);
+                // Emit the header element so layouts can also use it
+                this.$emit('header-mounted', header);
             }
         },
         isSelected(route) {
             return this.$route.path === route;
+        },
+        toggleMobileNav() {
+            this.$emit('toggle-mobile-nav');
         }
     },
     mounted() {
-        this.updateHeaderHeight();
-        window.addEventListener('resize', this.updateHeaderHeight); // Recalculate on window resize
-        
-        // // Update header height after every route change
-        // this.$router.afterEach(() => {
-        //     this.updateHeaderHeight();
-        // });
+        this.handleHeaderHeightUpdate();
+        window.addEventListener('resize', this.handleHeaderHeightUpdate);
     },
     beforeDestroy() {
-        window.removeEventListener('resize', this.updateHeaderHeight);
+        window.removeEventListener('resize', this.handleHeaderHeightUpdate);
     }
 }
 </script>
@@ -109,7 +117,7 @@ export default {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-wrap: wrap;
-    z-index: 10;
+    z-index: 9999;
     position: fixed;
     top: 0;
     width: 100%;

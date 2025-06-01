@@ -269,4 +269,38 @@ export default {
   margin: 0 1rem 0 0;
 }
 
+/* Mobile specific styles */
+@media screen and (max-width: 576px) {
+  .left-nav {
+    padding: 0;
+  }
+
+  .top-fixed-container,
+  .search-container,
+  .nav-header,
+  .media-list,
+  .divider {
+    display: none;
+  }
+  
+  .nav-list,
+  .media-list {
+    padding: 0.8rem 0;
+  }
+  
+  .nav-item-header {
+    padding: 0.5rem 0.8rem;
+  }
+  .nav-item-header.expanded{
+    background-color: unset;
+    color: #474747;
+    font-weight: bold;
+  }
+  
+  .nav-item .sub-list {
+    background-color: white;
+    border-bottom: none;
+  }
+
+}
 </style>

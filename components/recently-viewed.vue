@@ -93,4 +93,10 @@ export default {
 .recently-viewed-item-name{
     text-align: center;
 }
+
+@media screen and (max-width: 576px) {
+    .recently-viewed-wrapper {
+        padding: 1rem;
+    }
+}
 </style>

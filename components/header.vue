@@ -283,12 +283,12 @@ export default {
         display: block;
         flex: 1 1 30%;
         max-width: 30%;
-        margin: 0 0 0 1rem;
     }
 
     .side-menu .side-menu-icon {
         width: 1rem;
         cursor: pointer;
+        padding: 0 0 0 1rem;
     }
 
     .logo {

@@ -117,7 +117,7 @@ export default {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-wrap: wrap;
-    z-index: 9999;
+    z-index: 1000;
     position: fixed;
     top: 0;
     width: 100%;

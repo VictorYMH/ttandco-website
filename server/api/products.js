@@ -2,49 +2,63 @@ import { defineEventHandler, getQuery, readBody, createError } from 'h3';
 import pool from '../dbPool.js';
 
 async function getProductById(id) {
-  const [productRows] = await pool.query('SELECT * FROM products WHERE product_id = ?', [id]);
-  if (productRows.length === 0) {
-    console.log(`Product with ID ${id} not found`); // Add this line for logging
+  const result = await pool.query('SELECT * FROM ttco.m_items WHERE it_cd = $1', [id]);
+  if (result.rows.length === 0) {
+    console.log(`Product with ID ${id} not found`);
     throw createError({ statusCode: 404, statusMessage: 'Product not found' });
   }
 
-  const product = productRows[0];
-
-  // Fetch product images
-  const [imageRows] = await pool.query('SELECT * FROM product_images WHERE product_id = ?', [id]);
-  product.images = imageRows;
-
+  const product = result.rows[0];
+  product.images = product.item_imgs ? product.item_imgs.split('|').map(i=> {return {image_url:i}}) : [];
   return product;
 }
 
 async function getAllProducts() {
-  const [rows] = await pool.query('SELECT * FROM products');
+  const [rows] = await pool.query('SELECT * FROM m_items');
   return rows;
 }
 
-async function createProduct(body) {
-  const { name, description, sort_order, price, stock_quantity, category_id, is_active } = body;
-  const [result] = await pool.query(
-    'INSERT INTO products (name, description, sort_order, price, stock_quantity, category_id, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [name, description, sort_order, price, stock_quantity, category_id, is_active]
-  );
-  return { product_id: result.insertId, ...body };
-}
+// async function createProduct(body) {
+//   const {
+//     siire_cd, brand_cd, item_cd, item_name_jp, item_name, item_alias,
+//     item_info_1, item_info_2, item_info_3, item_cates, item_cates_name,
+//     item_tags, item_tags_name, item_imgs, item_colors, item_colors_name,
+//     item_sizes, item_sizes_name, item_zaiko_cnt, item_price_jp_org, item_price_jp,
+//     item_exc_rate, item_fee_rate, item_tax_rate, item_price, sort_no, rank_no,
+//     flg_top_slider, flg_top_banner, biko, del_flg, ins_datetime, upd_datetime,
+//     ins_user_id, upd_user_id, spe_cd, skus, status, item_collections, item_product_type
+//   } = body;
 
-async function updateProduct(id, body) {
-  const { name, description, sort_order, price, stock_quantity, category_id, is_active } = body;
-  const [result] = await pool.query(
-    'UPDATE products SET name = ?, description = ?, sort_order = ?, price = ?, stock_quantity = ?, category_id = ?, is_active = ? WHERE product_id = ?',
-    [name, description, sort_order, price, stock_quantity, category_id, is_active, id]
-  );
-  if (result.affectedRows === 0) {
-    throw createError({ statusCode: 404, statusMessage: 'Product not found' });
-  }
-  return { product_id: id, ...body };
-}
+//   const [result] = await pool.query(
+//     `INSERT INTO m_items (
+//       siire_cd, brand_cd, item_cd, item_name_jp, item_name, item_alias,
+//       item_info_1, item_info_2, item_info_3, item_cates, item_cates_name,
+//       item_tags, item_tags_name, item_imgs, item_colors, item_colors_name,
+//       item_sizes, item_sizes_name, item_zaiko_cnt, item_price_jp_org,
+//       item_price_jp, item_exc_rate, item_fee_rate, item_tax_rate, item_price,
+//       sort_no, rank_no, flg_top_slider, flg_top_banner, biko, del_flg,
+//       ins_datetime, upd_datetime, ins_user_id, upd_user_id, spe_cd, skus,
+//       status, item_collections, item_product_type
+//     ) VALUES (${Array(39).fill('?').join(', ')})`
+//   );
+//   return { it_cd: result.insertId, ...body };
+// }
+
+// async function updateProduct(id, body) {
+//   // Similar parameter destructuring to createProduct
+//   const [result] = await pool.query(
+//     `UPDATE m_items SET 
+//      WHERE it_cd = ?`,
+//     [/* All parameters including id */]
+//   );
+//   if (result.affectedRows === 0) {
+//     throw createError({ statusCode: 404, statusMessage: 'Product not found' });
+//   }
+//   return { it_cd: id, ...body };
+// }
 
 async function deleteProduct(id) {
-  const [result] = await pool.query('DELETE FROM products WHERE product_id = ?', [id]);
+  const [result] = await pool.query('DELETE FROM m_items WHERE it_cd = ?', [id]);
   if (result.affectedRows === 0) {
     throw createError({ statusCode: 404, statusMessage: 'Product not found' });
   }

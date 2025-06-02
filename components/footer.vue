@@ -10,7 +10,7 @@
                     <div class="subscribe-message">关注TT&CO.</div>
                 </div>
 
-                <div class="footer-column">
+                <div class="footer-column about-us">
                     <div class="header-title">关于TT&CO.</div>
                     <div class="footer-links">
                         <router-link to="/about-us" class="footer-link">关于我们</router-link>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
 
-                <div class="footer-column">
+                <div class="footer-column contact-us">
                     <div class="header-title">联系我们</div>
                     <div class="footer-links">
                         <router-link to="/customer-service" class="footer-link">官方咨询</router-link>
@@ -111,7 +111,7 @@ export default {
 
 @media (max-width: 576px) {
     .footer-content {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         padding: 1.5rem 1rem;
         gap: 1.5rem;
@@ -146,12 +146,13 @@ export default {
 
     .footer-column .logo {
         max-width: 12rem;
-        margin: 1.5rem auto;
+        margin: 2rem auto 0;
     }
 
-    .footer-column .subscribe-message {
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
+    .footer-column .subscribe-message,
+    .about-us,
+    .contact-us {
+        display: none;
     }
 }
 </style>

@@ -165,5 +165,8 @@ export default {
             opacity: 1;
         }
     }
+    .content {
+        padding: 0 .6rem;
+    }
 }
 </style>

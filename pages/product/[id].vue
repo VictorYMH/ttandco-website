@@ -1,7 +1,7 @@
 <template>
   <div class="product-detail-container">
     <div v-if="product">
-      <h1 class="product-header">{{ product.name }}</h1>
+      <h1 class="product-header">{{ product.item_name }}</h1>
       <div class="product-content-container">
         <div class="product-image-carousel-column" v-if="product && product.images && product.images.length">
           <NativeCarousel :items="product.images" :topShadow="false" :visibleItems="1"
@@ -14,9 +14,9 @@
           </NativeCarousel>
         </div>
         <div class="product-text-column">
-          <div class="product-name">{{ product.name }}</div>
-          <div class="product-code">商品编号 {{ product.name }}</div>
-          <div class="product-listed-description" v-html="product.listed_description"></div>
+          <div class="product-name">{{ product.item_name }}</div>
+          <div class="product-code">商品编号 {{ product.it_cd }}</div>
+          <div class="product-listed-description" v-html="product.item_tags_name"></div>
           <div class="mini-program-button">
             前往微信商城选购
           </div>
@@ -25,7 +25,7 @@
             <div class="wechat"><img src="/icons/wechat_tk_grey.png"></div>
           </div>
         </div>
-        <div class="product-description"  v-html="product.description">
+        <div class="product-description"  v-html="product.item_tags_name">
         </div>
       </div>
     </div>
@@ -79,6 +79,7 @@ if (error.value) {
 
 .product-image-carousel-column {
   flex: 0 0 60%; /* Fixed 60% width */
+  max-width: 60%;
 }
 
 .product-image-wrapper {
@@ -143,5 +144,29 @@ if (error.value) {
 }
 .product-description {
   flex: 0 0 100%; /* Full width row */
+}
+
+@media (max-width: 576px) {
+  .product-content-container {
+    flex-direction: column; /* Stack columns on smaller screens */
+    margin: 0;
+  }
+  .product-image-carousel-column,
+  .product-text-column {
+    flex: 1; /* Full width on small screens */
+    max-width: 100%;
+  }
+  .product-detail-container{
+    padding: 0 0 3.2rem
+  }
+  .product-image-wrapper {
+    padding: 0 1.2rem;
+  }
+  .product-header {
+    display: none;
+  }
+  .product-image-wrapper {
+    padding: 1rem;
+  }
 }
 </style>
